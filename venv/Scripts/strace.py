@@ -1,4 +1,4 @@
-#!D:\studystation\studypy\Dailyfresh\venv\Scripts\python.exe
+#!D:\PycharmPro\WebDjango\Dailyfresh\venv\Scripts\python.exe
 from ptrace import PtraceError
 from ptrace.debugger import (PtraceDebugger, Application,
                              ProcessExit, ProcessSignal, NewProcessEvent, ProcessExecution)

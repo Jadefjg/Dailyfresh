@@ -13,9 +13,9 @@ urlpatterns = [
     path('login', LoginView.as_view(), name='login'),                            # 登录
     path('logout', LogoutView.as_view(), name='logout'),                         # 退出登录
 
-    path('', login_required(UserInfoView.as_view()), name='user'),             # 用户信息
-    path('order/', login_required(UserOrderView.as_view()), name='order'),     # 订单
-    path('address/', login_required(UserSiteView.as_view()), name='address'),  # 地址
+    path('', login_required(UserInfoView.as_view()), name='user'),               # 用户信息
+    path('order/', login_required(UserOrderView.as_view()), name='order'),       # 订单
+    path('address/', login_required(UserSiteView.as_view()), name='address'),    # 地址
 
     # 使用LoginRequiredMixin装饰器
     path('', UserInfoView.as_view(), name='user'),                               # 用户信息

@@ -4,13 +4,14 @@ from django.contrib.auth import authenticate, login, logout
 from django.core.paginator import Paginator
 from django.shortcuts import render, redirect, reverse, HttpResponse
 from django.views.generic import View
-# from itsdangerous import TimedJSONWebSignatureSerializer as Serializer, SignatureExpired
-from itsdangerous import Serializer,SignatureExpired
 from django.conf import settings
 from django.core.mail import send_mail
+from django_redis import get_redis_connection
+
+# from itsdangerous import TimedJSONWebSignatureSerializer as Serializer, SignatureExpired
+from itsdangerous import Serializer,SignatureExpired
 from celery_tasks.tasks import send_register_active_email
 from utils.mixin import LoginRequiredMixin
-from django_redis import get_redis_connection
 
 from apps.goods.models import GoodsSKU
 from apps.order.models import OrderInfo, OrderGoods

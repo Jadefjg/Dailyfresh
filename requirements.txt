@@ -12,12 +12,12 @@ Deprecated==1.2.13
 Django==3.2
 django-redis==5.2.0
 django-tinymce==3.4.0
-fdfs-client-py==1.2.6
+fdfs-client-py
 future==0.18.2
 haystack==0.42
 itsdangerous==0.9
 kombu==5.2.4
-more-itertools @ file:///D:/PycharmProjects/ProWeb/Dailyfresh/venv/Lib/more_itertools-8.12.0-py3-none-any.whl
+more_itertools==8.12.0
 packaging==21.3
 pefile==2021.9.3
 Pillow==9.0.1

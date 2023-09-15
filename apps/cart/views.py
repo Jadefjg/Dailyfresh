@@ -1,4 +1,4 @@
-from django.http import JsonResponse
+from django.http import JsonResponse,request
 from django.shortcuts import render,redirect
 from django.views.generic.base import View
 from django_redis import get_redis_connection
@@ -13,6 +13,7 @@ from utils.mixin import LoginRequiredMixin
 # 传递参数：商品id sku_id,商品数量 count
 # 返回: JsonResponse({'res':5, 'message': '添加成功', 'total_count': total_count})
 # /cart/add
+
 class CartAddView(View):
     """购物车记录添加"""
 
@@ -99,13 +100,15 @@ class CartInfoView(LoginRequiredMixin,View):
         }
 
         # 使用模板，返回页面
-        return render(request,'df_cart/cart.html',context)
+        return render(request,'df_cart/cart.html',context)   # 问题1：cart.html 是 static 还是 templates
 
 
 # 请求方式：ajax post
 # 前端需要传递参数：商品id sku_id,商品数量 count
 # 返回：JsonResponse('res':5, 'message': '更新成功', 'total_count': total_count})
 # /cart/update
+
+
 class CartUpdateView(View):
     """购物车记录更新"""
     def post(self,request):
@@ -157,6 +160,7 @@ class CartUpdateView(View):
 # 传递参数：商品id sku_id
 # 返回： JsonResponse({'res':5, 'message': '删除成功'} )
 # /cart/delete
+
 class CartDeleteView(View):
     """购物车记录删除"""
     def post(self,request):

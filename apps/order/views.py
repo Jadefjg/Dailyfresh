@@ -560,10 +560,6 @@ class CommentView(LoginRequiredMixin, View):
         return redirect(reverse('user:order', kwargs={'page': 1}))
 
 
-
-
-
-
 # Create your views here.
 
 # @islogin

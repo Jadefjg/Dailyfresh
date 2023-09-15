@@ -74,3 +74,7 @@ cd /usr/local/nginx/sbin/
 #### 查看nginx服务   
 ps aux|grep nginx    
 
+
+
+
+

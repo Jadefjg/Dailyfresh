@@ -5,7 +5,7 @@
 # import django
 # os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'Dailyfresh.settings')
 # django.setup()
-# celery -A celery_tasks.tasks worker -l info
+# 执行命令：celery -A celery_tasks.tasks worker -l info
 
 import os
 import time
@@ -16,18 +16,18 @@ from django.core.mail import send_mail
 from django_redis import get_redis_connection
 
 from Dailyfresh import settings
-from apps.goods.models import GoodsType,IndexGoodsBanner,IndexTypeGoodsBanner
+from apps.goods.models import GoodsType,IndexGoodsBanner,IndexTypeGoodsBanner,IndexPromotionBanner
 
 
 # 创建一个 Celery 类的实例对象
-app = Celery('celery_tasks.tasks',broker='redis://192.168.1.7:6379/8')  # 8号数据库
+app = Celery('celery_tasks.tasks',broker='redis://192.168.171.130:6379/8')  # 8号数据库
 
 
 # 定义任务函数
 @app.task
 def send_register_active_email(to_mail,username,token):
     """发送激活邮件"""
-    # 组织发送邮件信息
+    # 发送邮件信息
     subject = '天天生鲜换新信息'
     message = ''
     sender = settings.EMAIL_FROM

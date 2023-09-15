@@ -88,9 +88,9 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'Dailyfresh',
         'USER': 'root',
-        'PASSWORD': 'root',
-        'HOST': '192.168.226.128',
-        'POST': 3306,
+        'PASSWORD': 'feng514',
+        'HOST': '192.168.171.130',
+        'POST': 8003,
     }
 }
 
@@ -152,19 +152,19 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # 发送邮件配置
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-# EMAIL_USE_TLS = False   # 是否使用TLS安全传输协议(用于在两个通信应用程序之间提供保密性和数据完整性。)
-# EMAIL_USE_SSL = True    # 是否使用SSL加密，qq企业邮箱要求使用
-EMAIL_HOST = 'smtp.163.com'               # smpt服务地址
-EMAIL_PORT = 25                           # 端口
-EMAIL_HOST_USER = 'fjgjiagang@163.com'    # 邮箱
-EMAIL_HOST_PASSWORD = 'xxxxxx'            # 授权密码
-EMAIL_PROM = '天天生鲜<Ylisen10@163.com>'  # 收件人看到的发件人
+# EMAIL_USE_TLS = False                    # 是否使用TLS安全传输协议(用于在两个通信应用程序之间提供保密性和数据完整性。)
+# EMAIL_USE_SSL = True                     # 是否使用SSL加密，qq企业邮箱要求使用
+EMAIL_HOST = 'smtp.163.com'                # smpt服务地址
+EMAIL_PORT = 25                            # 端口
+EMAIL_HOST_USER = 'fjgjiagang@163.com'     # 邮箱
+EMAIL_HOST_PASSWORD = 'xxxxxx'             # 授权密码
+EMAIL_PROM = '天天生鲜<Ylisen10@163.com>'   # 收件人看到的发件人
 
 # Django redis 缓存配置。服务端进入数据库命令：redis-cli -h ip 、select 9 、key *
 CACHES = {
     "default":{
         "BACKEND":"django_redis.cache.RedisCache",
-        "LOCATION":"redis://172.17.248.122:6379/9",
+        "LOCATION":"redis://192.168.171.130:6379/9",
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
         }
@@ -182,10 +182,10 @@ LOGIN_URL = '/user/login'
 DEFAULT_FILE_STORAGE = 'utils.fdfs.storage.FDFSStorage'
 
 # 设置fdfs使用的client.conf的文件路径
-# FDFS_CLIENT_CONF = '/etc/fdfs/client.conf'    # 部署服务器时需配置
+FDFS_CLIENT_CONF = '/etc/fdfs/client.conf'    # 部署服务器时需配置
 
 # 设置fdfs存储服务器上Nginx的ip和port
-# FDFS_URL = 'http://192.168.209.130:8888/'
+FDFS_URL = 'http://192.168.209.130:8888/'
 
 # 全文检索框架配置
 HAYSTACK_CONNECTIONS = {
@@ -202,6 +202,4 @@ HAYSTACK_CONNECTIONS = {
 HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
 # 指定搜索每页显示条数 默认20
 HAYSTACK_SEARCH_RESULTS_PER_PAGE = 10        # 指定搜索结果每页显示多少条信息
-
-
 
