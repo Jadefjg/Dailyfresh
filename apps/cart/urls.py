@@ -1,6 +1,7 @@
 from django.urls import path
 from apps.cart.views import CartAddView,CartInfoView,CartUpdateView,CartDeleteView
 
+# app_name = 'cart'
 app_name = 'apps.cart'
 
 urlpatterns = [

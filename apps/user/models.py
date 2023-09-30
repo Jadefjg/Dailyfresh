@@ -12,6 +12,7 @@ from db.base_model import BaseModel
 
 class User(AbstractUser,BaseModel):
     """用户模型类"""
+
     def generate_active_token(self):
         '''生成用户签名字符串'''
         serializer = Serializer(settings.SECRET_KEY,3600)
@@ -25,14 +26,14 @@ class User(AbstractUser,BaseModel):
         verbose_name_plural = verbose_name
 
 
-class UserInfo(models.Manager):
-    name = models.CharField(max_length=30,verbose_name="用户名")
-    phone = models.CharField(max_length=11,verbose_name="手机号")
-
-    class Meta:
-        db_table = 'db_userinfo'
-        verbose_name = '用户信息'
-        verbose_name_plural = verbose_name
+# class UserInfo(models.Manager):
+#     name = models.CharField(max_length=30,verbose_name="用户名")
+#     phone = models.CharField(max_length=11,verbose_name="手机号")
+#
+#     class Meta:
+#         db_table = 'db_userinfo'
+#         verbose_name = '用户信息'
+#         verbose_name_plural = verbose_name
 
 
 class AddressManager(models.Manager):

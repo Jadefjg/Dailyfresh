@@ -12,8 +12,8 @@ from utils.mixin import LoginRequiredMixin
 # 请求方式：ajax post
 # 传递参数：商品id sku_id,商品数量 count
 # 返回: JsonResponse({'res':5, 'message': '添加成功', 'total_count': total_count})
-# /cart/add
 
+# /cart/add
 class CartAddView(View):
     """购物车记录添加"""
 
@@ -61,7 +61,7 @@ class CartAddView(View):
         return JsonResponse({'res':5, 'message': '添加成功', 'total_count': total_count})
 
 
-# /cart
+# /cart/Info
 class CartInfoView(LoginRequiredMixin,View):
     """显示购物车页面"""
     def get(self,request):
@@ -100,15 +100,14 @@ class CartInfoView(LoginRequiredMixin,View):
         }
 
         # 使用模板，返回页面
-        return render(request,'df_cart/cart.html',context)   # 问题1：cart.html 是 static 还是 templates
+        return render(request,'df_cart/cart.html',context)   # 问题1：cart.html 是 static 还是 templates;
 
 
 # 请求方式：ajax post
 # 前端需要传递参数：商品id sku_id,商品数量 count
 # 返回：JsonResponse('res':5, 'message': '更新成功', 'total_count': total_count})
+
 # /cart/update
-
-
 class CartUpdateView(View):
     """购物车记录更新"""
     def post(self,request):
@@ -159,8 +158,8 @@ class CartUpdateView(View):
 # 请求方式：ajax post
 # 传递参数：商品id sku_id
 # 返回： JsonResponse({'res':5, 'message': '删除成功'} )
-# /cart/delete
 
+# /cart/delete
 class CartDeleteView(View):
     """购物车记录删除"""
     def post(self,request):
