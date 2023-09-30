@@ -86,7 +86,7 @@ DATABASES = {
         # 'NAME': BASE_DIR / 'db.sqlite3',
 
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'Dailyfresh',   # 数据库名
+        'NAME': 'dailyfresh',   # 数据库名
         'USER': 'root',
         'PASSWORD': 'feng514',
         'HOST': '192.168.0.100',
