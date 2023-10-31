@@ -20,7 +20,7 @@ from apps.goods.models import GoodsType,IndexGoodsBanner,IndexTypeGoodsBanner,In
 
 
 # 创建一个 Celery 类的实例对象
-app = Celery('celery_tasks.tasks',broker='redis://192.168.171.130:8002/8')  # 8号数据库
+app = Celery('celery_tasks.tasks',broker='redis://192.168.79.128:8001/8')  # 8号数据库
 
 
 # 定义任务函数

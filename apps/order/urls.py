@@ -10,3 +10,5 @@ urlpatterns = [
     path('check', CheckPayView.as_view(), name='check'),                            # 查看订单支付状态
     re_path('^comment/(?P<order_id>.+)$', CommentView.as_view(), name='comment'),   # 订单评论
 ]
+
+

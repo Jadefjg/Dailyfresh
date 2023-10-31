@@ -21,53 +21,54 @@ from apps.user.models import User, Address, AddressManager
 
 
 # user/register/
-# def register(request):
-#     """显示注册页面"""
-#     # return render(request,'register.html')
-#     if request.method == 'GET':
-#         return render(request, 'register.html')
-#     elif request.method == 'POST':
-#         # 1、接受数据
-#         username = request.POST.get('user_name')
-#         password = request.POST.get('pwd')
-#         email = request.POST.get('email')
-#         allow = request.POST.get('allow')
-#
-#         # 2、进行数据校验
-#         if not all([username, password, email]):
-#             # 数据不完整
-#             return render(request, 'df_user/register.html', {'errmsg': '数据不匹配'})
-#
-#         # 检验邮箱
-#         if not re.match(r'^[a-z0-9][\w.\-]*@[a-z0-9\-]+(\.[a-z]{2,5}){1,2}$', email):
-#             return render(request, 'df_user/register.html', {'errmsg': '邮箱格式不正确'})
-#
-#         if allow != 'on':
-#             return render(request, 'df_user/register.html', {'errmsg': '请同意协议'})
-#
-#         # 校验用户名是否重复
-#         try:
-#             user = User.objects.get(username=username)
-#         except User.DoseNotExist:
-#             # 用户名不存在
-#             user = None
-#         if user:
-#             return render(request, 'df_user/register.html', {'errmsg': '用户名已存在'})
-#         # 3、进行业务处理 ： 进行用户注册
-#         # user = User()
-#         # user.username = username
-#         # user.password = password
-#         # user.save()
-#         user = User.objects.create_user(username, email, password)
-#         user.is_active = 0  # 未激活
-#         user.save()
-#         # 4、返回应答，跳转至首页
-#         return redirect(reverse('goods:index'))
+def register(request):
+    """显示注册页面"""
+    # return render(request,'register.html')
+    if request.method == 'GET':
+        return render(request, 'register.html')
+    elif request.method == 'POST':
+        # 1、接受数据
+        username = request.POST.get('user_name')
+        password = request.POST.get('pwd')
+        email = request.POST.get('email')
+        allow = request.POST.get('allow')
+
+        # 2、进行数据校验
+        if not all([username, password, email]):
+            # 数据不完整
+            return render(request, 'df_user/register.html', {'errmsg': '数据不匹配'})
+
+        # 检验邮箱
+        if not re.match(r'^[a-z0-9][\w.\-]*@[a-z0-9\-]+(\.[a-z]{2,5}){1,2}$', email):
+            return render(request, 'df_user/register.html', {'errmsg': '邮箱格式不正确'})
+
+        if allow != 'on':
+            return render(request, 'df_user/register.html', {'errmsg': '请同意协议'})
+
+        # 校验用户名是否重复
+        try:
+            user = User.objects.get(username=username)
+        except User.DoseNotExist:
+            # 用户名不存在
+            user = None
+        if user:
+            return render(request, 'df_user/register.html', {'errmsg': '用户名已存在'})
+        # 3、进行业务处理 ： 进行用户注册
+        # user = User()
+        # user.username = username
+        # user.password = password
+        # user.save()
+        user = User.objects.create_user(username, email, password)
+        user.is_active = 0  # 未激活
+        user.save()
+        # 4、返回应答，跳转至首页
+        return redirect(reverse('goods:index'))
+
 
 # user/register_handld
-# def register_handle(request):
-#     """进行注册处理"""
-#     pass
+def register_handle(request):
+    """进行注册处理"""
+    pass        # 待开确定
 
 
 class RegisterView(View):
@@ -154,6 +155,7 @@ class ActiveView(View):
             token = token.encode()
             info = serializer.loads(token)
             user_id = info['confirm']
+            # 根据用户id获取用户信息
             user = User.objects.get(id=user_id)
             user.is_active = 1
             user.save()
@@ -182,7 +184,7 @@ class LoginView(View):
             'username' : username,
             'checked': checked,
         }
-        return render(request, 'df_user/login.html', context)
+        return render(request, 'login/.html', context)
 
     def post(self, request):
         """登录校验"""
@@ -192,7 +194,7 @@ class LoginView(View):
 
         # 2、校验数据
         if not all([username, password]):
-            return render(request, 'df_user/login.html', {'errmsg': '数据不完整'})
+            return render(request, 'login.html', {'errmsg': '数据不完整'})
 
         # 3、业务处理: 登录校验
         user = authenticate(username=username, password=password)
@@ -218,10 +220,10 @@ class LoginView(View):
                 return response
             else:
                 # 用户未激活
-                return render(request, 'df_user/login.html', {'errmsg': '账户未激活'})
+                return render(request, 'login.html', {'errmsg': '账户未激活'})
         else:
             # 用户名密码错误
-            return render(request, 'df_user/login.html', {'errmsg': '用户名或密码错误'})
+            return render(request, 'login.html', {'errmsg': '用户名或密码错误'})
         # 4、返回应答
 
 

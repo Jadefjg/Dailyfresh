@@ -14,7 +14,8 @@ import sys
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+# BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
 
 # Quick-start development settings - unsuitable for production
@@ -24,9 +25,9 @@ sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
 SECRET_KEY = 'django-insecure-&-*6r3^992js14-kf3v&lt4)^xoez6n+yh5jsl5(u^r8t@wlbh'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = True  # DEBUG 上线后需要改成False之后，需要重新启动服务。为False时候静态文件加载不到
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']  # 域名访问权限，默认值为空[], 只允许localhost或127.0.0.1在浏览器上访问；若想让所有的域名都能访问，可设置为：ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -40,10 +41,15 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'tinymce',       # 富文本编辑器
     'haystack',      # 全文检索框架
-    'apps.user',     # 用户模块
-    'apps.goods',    # 商品模块
-    'apps.cart',     # 购物车模块
-    'apps.order',    # 订单模块
+    # 'apps.user',     # 用户模块
+    # 'apps.goods',    # 商品模块
+    # 'apps.cart',     # 购物车模块
+    # 'apps.order',    # 订单模块
+
+    'user',   # 用户模块
+    'goods',  # 商品模块
+    'cart',   # 购物车模块
+    'order',  # 订单模块
 ]
 
 MIDDLEWARE = [
@@ -89,13 +95,13 @@ DATABASES = {
         'NAME': 'dailyfresh',   # 数据库名
         'USER': 'root',
         'PASSWORD': 'feng514',
-        'HOST': '192.168.0.100',
-        'POST': '3306',
+        'HOST': '192.168.79.128',
+        'POST': '3306'
     }
 }
 
 # django认证系统使用的模型类
-AUTH_USER_MODEL='user.User'
+AUTH_USER_MODEL='user.User'     #
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -116,6 +122,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 # Internationalization
+
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
 # LANGUAGE_CODE = 'en-us'
@@ -166,7 +173,7 @@ EMAIL_PROM = '天天生鲜<Ylisen10@163.com>'   # 收件人看到的发件人
 CACHES = {
     "default":{
         "BACKEND":"django_redis.cache.RedisCache",
-        "LOCATION":"redis://192.168.0.100:8002/9",
+        "LOCATION":"redis://192.168.79.128:8001/9",
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
         }
@@ -187,7 +194,7 @@ DEFAULT_FILE_STORAGE = 'utils.fdfs.storage.FDFSStorage'
 FDFS_CLIENT_CONF = '/etc/fdfs/client.conf'    # 部署服务器时需配置
 
 # 设置fdfs存储服务器上Nginx的ip和port
-FDFS_URL = 'http://192.168.0.100:8888/'
+FDFS_URL = 'http://192.168.79.128:8888/'
 
 
 # 全文检索框架配置

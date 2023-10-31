@@ -10,3 +10,5 @@ urlpatterns = [
     re_path('^goods/list/(?P<type_id>\d+)/(?P<page>\d+)$', ListView.as_view(), name='list'),
     # re_path('^goods/(?P<goods_id>\d+)$', MySeachView.as_view(), name='seachview'),
 ]
+
+
