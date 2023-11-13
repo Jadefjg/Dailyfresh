@@ -23,10 +23,11 @@ from apps.user.models import User, Address, AddressManager
 # user/register/
 def register(request):
     """显示注册页面"""
-    # return render(request,'register.html')
     if request.method == 'GET':
-        return render(request, 'register.html')
+        # 显示注册页面
+        return render(request, 'df_user/register.html')
     elif request.method == 'POST':
+        # 进行注册处理
         # 1、接受数据
         username = request.POST.get('user_name')
         password = request.POST.get('pwd')
@@ -53,7 +54,7 @@ def register(request):
             user = None
         if user:
             return render(request, 'df_user/register.html', {'errmsg': '用户名已存在'})
-        # 3、进行业务处理 ： 进行用户注册
+        # 3、进行业务处理 ：进行用户注册
         # user = User()
         # user.username = username
         # user.password = password
@@ -71,14 +72,16 @@ def register_handle(request):
     pass        # 待开确定
 
 
+# /user/register
 class RegisterView(View):
     """注册"""
     def get(self, request):
         # 显示注册页面
-        return render(request, 'df_user/register.html')
+        return render(request, 'register.html')
 
     def post(self, request):
-        # 进行注册处理  # 接受数据
+        # 进行注册处理
+        # 接受数据
         username = request.POST.get('user_name')
         password = request.POST.get('pwd')
         email = request.POST.get('email')
@@ -87,14 +90,14 @@ class RegisterView(View):
         # 进行数据处理
         if not all([username, password, email]):
             # 数据不完整
-            return render(request, 'df_user/register.html', {'errmsg': '数据不匹配'})
+            return render(request, 'register.html', {'errmsg': '数据不匹配'})
 
         # 检验邮箱
         if not re.match(r'^[a-z0-9][\w.\-]*@[a-z0-9\-]+(\.[a-z]{2,5}){1,2}$', email):
-            return render(request, 'df_user/register.html', {'errmsg': '邮箱格式不正确'})
+            return render(request, 'register.html', {'errmsg': '邮箱格式不正确'})
 
         if allow != 'on':
-            return render(request, 'df_user/register.html', {'errmsg': '请同意协议'})
+            return render(request, 'register.html', {'errmsg': '请同意协议'})
 
         # 校验用户名是否重复
         try:
@@ -103,7 +106,7 @@ class RegisterView(View):
             # 用户名不存在
             user = None
         if user:
-            return render(request, 'df_user/register.html', {'errmsg': '用户名已存在'})
+            return render(request, 'register.html', {'errmsg': '用户名已存在'})
 
         # 进行业务处理 ： 进行用户注册
         # user = User()
@@ -120,8 +123,8 @@ class RegisterView(View):
         # 进行加密用户信息，生成激活token
         serializer = Serializer(settings.SECRET_KEY, 3600)
         info = {'confirm': user.id}
-        token = serializer.dumps(info)  # bytes
-        token = token.decode()          # 转为字符串，默认为utf-8
+        token = serializer.dumps(info)      # bytes
+        token = token.decode()              # 转为字符串，默认为utf-8
 
         # 发邮法1：发送邮件
         # subject = '天天生鲜欢迎信息'
@@ -181,10 +184,10 @@ class LoginView(View):
             checked = ''
         # 使用模板
         context = {
-            'username' : username,
+            'username': username,
             'checked': checked,
         }
-        return render(request, 'login/.html', context)
+        return render(request, 'login.html', context)
 
     def post(self, request):
         """登录校验"""
@@ -206,9 +209,14 @@ class LoginView(View):
                 login(request, user)
 
                 # 获取要跳转的地址, 默认跳转到首页
+                # next_url = request.GET.get('next')
                 next_url = request.GET.get('next', reverse('goods:index'))
+
                 # 跳转到首页
+                # response = redirect(reverse("good:index"))
                 response = redirect(next_url)
+
+                # 判断是否要记住用户名
                 remember = request.POST.get('remember')
 
                 if remember == 'on':
@@ -227,6 +235,7 @@ class LoginView(View):
         # 4、返回应答
 
 
+# /user/logout
 class LogoutView(View):
     """退出登录"""
     def get(self, request):
@@ -271,7 +280,7 @@ class UserInfoView(LoginRequiredMixin, View):
         }
 
         # 如果用户已登录 request.user.is_authenticated 返回True，在模板变量中可以直接用 user.is_authenticated
-        return render(request, 'df_user/user_center_info.html', context)
+        return render(request, '/user_center_info.html', context)
 
 
 # /user/order
@@ -328,7 +337,7 @@ class UserOrderView(LoginRequiredMixin, View):
             'page': 'order',
         }
 
-        return render(request, 'df_user/user_center_order.html', context)
+        return render(request, 'user_center_order.html', context)
 
 
 # /user/address

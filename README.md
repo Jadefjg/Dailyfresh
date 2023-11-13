@@ -8,7 +8,7 @@
 列出所有：lsvirtualenv    
 workon df-env (退出 deactivate)     
 
-#### requirements.txt用来记录项目所有的依赖包和版本号:     
+#### requirements.txt用来记录项目所有的依赖包和版本号信息:     
 ```pip freeze >requirements.txt```    
 
 安装requirement.txt:    

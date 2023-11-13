@@ -48,6 +48,8 @@ class IndexView(View):
                 'types': types,
                 'goods_banners': goods_banners,
                 'promotion_banners': promotion_banners,
+                # 'type_goods_banners': type_goods_banners,
+                # 'cart_count': cart_count
             }
             # 设置缓存
             cache.set('index_page_data', context, 3600)

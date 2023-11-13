@@ -16,6 +16,7 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 # BASE_DIR = Path(__file__).resolve().parent.parent
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
 sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
 
 # Quick-start development settings - unsuitable for production
@@ -27,7 +28,7 @@ SECRET_KEY = 'django-insecure-&-*6r3^992js14-kf3v&lt4)^xoez6n+yh5jsl5(u^r8t@wlbh
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True  # DEBUG 上线后需要改成False之后，需要重新启动服务。为False时候静态文件加载不到
 
-ALLOWED_HOSTS = ['*']  # 域名访问权限，默认值为空[], 只允许localhost或127.0.0.1在浏览器上访问；若想让所有的域名都能访问，可设置为：ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = []  # 域名访问权限，默认值为空[], 只允许localhost或127.0.0.1在浏览器上访问；若想让所有的域名都能访问，可设置为：ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -41,15 +42,16 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'tinymce',       # 富文本编辑器
     'haystack',      # 全文检索框架
-    # 'apps.user',     # 用户模块
-    # 'apps.goods',    # 商品模块
-    # 'apps.cart',     # 购物车模块
-    # 'apps.order',    # 订单模块
+    # sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
+    'apps.user',     # 用户模块
+    'apps.goods',    # 商品模块
+    'apps.cart',     # 购物车模块
+    'apps.order',    # 订单模块
 
-    'user',   # 用户模块
-    'goods',  # 商品模块
-    'cart',   # 购物车模块
-    'order',  # 订单模块
+    # 'user',   # 用户模块
+    # 'goods',  # 商品模块
+    # 'cart',   # 购物车模块
+    # 'order',  # 订单模块
 ]
 
 MIDDLEWARE = [
@@ -76,6 +78,9 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+            'libraries': {  # Adding this section should work around the issue. 修改此处
+                'staticfiles': 'django.templatetags.static',
+            },
         },
     },
 ]
@@ -129,7 +134,7 @@ AUTH_PASSWORD_VALIDATORS = [
 LANGUAGE_CODE = 'zh-hans'
 
 # TIME_ZONE = 'UTC'          # 时区
-TIME_ZONE = 'Asia/Shanghai'  # 设置为上海
+TIME_ZONE = 'Asia/Shanghai'  # 设置为中国上海
 
 USE_I18N = True
 
@@ -185,7 +190,7 @@ SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 SESSION_CACHE_ALIAS = "default"
 
 # 配置登录url地址
-LOGIN_URL = '/user/login'
+LOGIN_URL = '/user/login'   # accounts/login?next=/user
 
 # 设置django的默认文件存储类
 DEFAULT_FILE_STORAGE = 'utils.fdfs.storage.FDFSStorage'

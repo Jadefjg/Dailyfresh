@@ -6,7 +6,6 @@ from django_redis import get_redis_connection
 from apps.goods.models import GoodsSKU
 from utils.mixin import LoginRequiredMixin
 
-
 # Create your views here
 
 # 请求方式：ajax post
@@ -112,6 +111,7 @@ class CartUpdateView(View):
     """购物车记录更新"""
     def post(self,request):
         """购物车记录更新"""
+        # 用户是否登录
         user = request.user
         if not user.is_authenticated:
             return JsonResponse({'res': 0, 'errmsg': '请先登录'})
@@ -185,7 +185,7 @@ class CartDeleteView(View):
         conn = get_redis_connection('default')
         cart_key = 'cart_{0}'.format(user.id)
 
-        conn.hdel(cart_key,sku_id)
+        conn.hdel(cart_key,sku_id)  # 删除数据
 
         # 计算商品的总件数
         total_count = 0

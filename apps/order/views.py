@@ -32,6 +32,7 @@ class OrderPlaceView(LoginRequiredMixin,View):
 
         # 获取登录的用户
         user = request.user
+
         # 获取参数 sku_ids
         sku_ids = request.POST.getList('sku_ids')
         # 校验数据
@@ -52,15 +53,15 @@ class OrderPlaceView(LoginRequiredMixin,View):
             # 计算商品小计
             amount = int(count) * sku.price
             # 动态给 sku 增加 amount, count属性
-            sku.count = count
-            sku.amount = amount
+            sku.count = count        # 动态给 sku 增加属性 amount， 保存购买商品数量
+            sku.amount = amount     # 动态给 sku 增加属性 amount， 保存购买商品的小计
 
             skus.append(sku)
-            total_count += int(count)
-            total_price += amount
+            total_count += int(count)   # 商品总数
+            total_price += amount       # 商品总价
 
-        # 运费：实际开发需要单独涉及，这里写死
-        transit_price = 10
+        # 运费：实际开发需要单独设计，属于一个子系统
+        transit_price = 10      # 写死
 
         # 实付款
         total_pay = total_price + transit_price
@@ -295,6 +296,7 @@ class OrderCommitView1(View):
                     res = GoodsSKU.objects.filter(id=sku_id,stock=orgin_stock).update(stock=new_stock,sales=new_sales)
                     if res == 0:
                         if i == 2:
+                            # 尝试的第3次
                             transaction.savepoint_rollback(save_id)
                             return JsonResponse({'res': 7, 'errmsg': '下单失败2'})
                         continue
@@ -360,7 +362,7 @@ class OrderPayView(View):
             return JsonResponse({'res': 2, 'errmsg': '无效的订单id'})
 
         """
-        设置配置，包括支付宝网关地址、app_id、应用私钥、支付宝公钥等，其他配置可以查看AlipayClinetConfig的定义
+            设置配置，包括支付宝网关地址、app_id、应用私钥、支付宝公钥等，其他配置可以查看AlipayClinetConfig的定义
         """
         alipay_client_config = AlipayClientConfig()
         alipay_client_config.server_url = 'https://openapi.alipaydev.com/gateway.do'
@@ -377,11 +379,11 @@ class OrderPayView(View):
                 alipay_public_key += line
         alipay_client_config.alipay_public_key = alipay_public_key
         """
-        得到客户端对象。
-        注意，一个alipay_client_config对象对应一个DefaultAlipayClient，
-        定义DefaultAlipayClient对象后，alipay_client_config不得修改，
-        如果想使用不同的配置，请定义不同的DefaultAlipayClient。
-        logger参数用于打印日志，不传则不打印，建议传递。
+            得到客户端对象。
+            注意，一个alipay_client_config对象对应一个DefaultAlipayClient，
+            定义DefaultAlipayClient对象后，alipay_client_config不得修改，
+            如果想使用不同的配置，请定义不同的DefaultAlipayClient。
+            logger参数用于打印日志，不传则不打印，建议传递。
         """
         client = DefaultAlipayClient(alipay_client_config=alipay_client_config,logger=logger)
 

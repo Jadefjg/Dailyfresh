@@ -15,8 +15,8 @@ class User(AbstractUser,BaseModel):
 
     def generate_active_token(self):
         '''生成用户签名字符串'''
-        serializer = Serializer(settings.SECRET_KEY,3600)
-        info = {'confirm':self.id}
+        serializer = Serializer(settings.SECRET_KEY, 3600)
+        info = {'confirm': self.id}
         token = serializer.dumps(info)
         return token.decode()
 
@@ -45,7 +45,7 @@ class AddressManager(models.Manager):
         """获取用户默认地址"""
         # 获取用户默认收货地址
         try:
-            address = self.get(user=user,is_default=True)
+            address = self.get(user=user, is_default=True)
         except self.model.DoesNotExist as e:
             address = None  # 不存在默认地址
         return address
